@@ -2,21 +2,22 @@ name: file_manager
 version: 1.0.0+1
 publish_to: none
 description: A simple & fast file manager for desktop
-environment: 
-  sdk: '>=2.12.0 <3.0.0'
+environment:
+  sdk: '>=2.17.0 <3.0.0'
 
-dependencies: 
-  cupertino_icons: ^1.0.2
-  get: 4.3.8
-  flutter: 
+dependencies:
+  bloc: ^8.0.3
+  cupertino_icons: ^1.0.4
+  flutter:
     sdk: flutter
+  flutter_bloc: ^8.0.1
+  path_provider: ^2.0.10
 
-dev_dependencies: 
-  flutter_lints: ^1.0.0
-  lints: 1.0.1
-  flutter_test: 
+dev_dependencies:
+  flutter_lints: ^2.0.1
+  flutter_test:
     sdk: flutter
+  lints: 2.0.0
 
-flutter: 
+flutter:
   uses-material-design: true
-
