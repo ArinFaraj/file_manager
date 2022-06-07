@@ -50,9 +50,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         state.currentPanel0History < state.panel0PathHistory.length - 1) {
       emit(
         state.copyWith(
-            currentPanel0History: state.currentPanel0History + 1,
-            panel0Path:
-                state.panel0PathHistory[state.currentPanel0History + 1]),
+          currentPanel0History: state.currentPanel0History + 1,
+          panel0Path: state.panel0PathHistory[state.currentPanel0History + 1],
+        ),
       );
     }
   }
@@ -61,9 +61,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (state.panel0PathHistory.isNotEmpty && state.currentPanel0History != 0) {
       emit(
         state.copyWith(
-            currentPanel0History: state.currentPanel0History - 1,
-            panel0Path:
-                state.panel0PathHistory[state.currentPanel0History - 1]),
+          currentPanel0History: state.currentPanel0History - 1,
+          panel0Path: state.panel0PathHistory[state.currentPanel0History - 1],
+        ),
       );
     }
   }

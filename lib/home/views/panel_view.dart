@@ -1,13 +1,18 @@
 import 'dart:io';
 
+import 'package:file_manager/home/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:get/get.dart';
-import 'package:path/path.dart';
+// ignore: depend_on_referenced_packages
+import 'package:path/path.dart' show basename;
 
 class PanelView extends StatelessWidget {
-  PanelView(this.path, {Key? key}) : super(key: key);
+  const PanelView(this.path, {Key? key}) : super(key: key);
+
   final Directory path;
+
   @override
   Widget build(BuildContext context) {
     final files = path
@@ -15,8 +20,14 @@ class PanelView extends StatelessWidget {
         .map((e) => Dirr(path: e.path, type: FileSystemEntity.typeSync(e.path)))
         .toList();
     files.sort((x, y) => x.path.compareTo(y.path));
-
     files.sort((x, y) => x.type == y.type ? 0 : 1);
+    files.insert(
+        0,
+        Dirr(
+            path: (path.path.split(Platform.pathSeparator)..removeLast())
+                .join(Platform.pathSeparator),
+            overridenName: '../',
+            type: FileSystemEntity.typeSync(path.path)));
     return Material(
       child: ListView.builder(
         itemCount: files.length,
@@ -25,7 +36,9 @@ class PanelView extends StatelessWidget {
           return InkWell(
             // dense: true,
             onTap: () {
-              // c.setPath(0, file.path);
+              context.read<HomeBloc>().add(
+                    HomeSetPath(0, file.path),
+                  );
             },
             child: Row(
               children: [
@@ -42,7 +55,7 @@ class PanelView extends StatelessWidget {
                         : Colors.white,
                   ),
                 ),
-                Text(basename(file.path)),
+                Text(file.overridenName ?? basename(file.path)),
               ],
             ),
           );
@@ -53,10 +66,13 @@ class PanelView extends StatelessWidget {
 }
 
 class Dirr {
-  String path;
-  FileSystemEntityType type;
   Dirr({
     required this.path,
+    this.overridenName,
     required this.type,
   });
+
+  String? overridenName;
+  String path;
+  FileSystemEntityType type;
 }
